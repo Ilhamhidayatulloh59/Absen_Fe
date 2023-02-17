@@ -1,10 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, Lorem, Flex, Circle, Icon, Text } from "@chakra-ui/react";
 import { IoAddOutline } from "react-icons/io5";
-import Scanner from "./Scanner";
+import Html5QrcodePlugin from "./Scanner";
+import ResultContainerPlugin from "./Result";
 
 const ModalForm = ({label}) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const [decodedResults, setDecodedResults] = useState([]);
+    const onNewScanResult = (decodedText, decodedResult) => {
+        console.log("App [result]", decodedResult);
+        setDecodedResults(prev => [...prev, decodedResult]);
+    };
 
     return (
       <>
@@ -28,7 +34,13 @@ const ModalForm = ({label}) => {
             <ModalCloseButton />
             <ModalBody>
               <Text>dvskmfgkmsobmsf</Text>
-              <Scanner/>
+              <Html5QrcodePlugin
+                    fps={10}
+                    qrbox={250}
+                    disableFlip={false}
+                    qrCodeSuccessCallback={onNewScanResult}
+                />
+                <ResultContainerPlugin results={decodedResults} />
             </ModalBody>
             <ModalFooter>
               <Button colorScheme='blue' mr={3} onClick={onClose}>
