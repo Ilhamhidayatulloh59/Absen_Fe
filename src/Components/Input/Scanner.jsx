@@ -6,7 +6,7 @@ class Scanner extends Component {
   
   constructor (props) {
     super(props)
-    this.state = { value: '', watching: true }
+    this.state = { value: '', watching: false }
     this.onFind = this.onFind.bind(this)
   }
   
@@ -22,12 +22,13 @@ class Scanner extends Component {
         <h1>QRScan Demo</h1>
         {this.state.watching
           ? (
-            <Flex justify='center' w='90vw' h='40vh' overflow='hidden'>
+            <Flex>
                 <QRScan onFind={this.onFind} />
             </Flex>
           )
           : (
             <Box>
+              <button onClick={() => this.setState({ watching: true })}>Scan</button>
               <h4>value: {this.state.value}</h4>
             </Box>
           )
