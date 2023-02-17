@@ -11,6 +11,7 @@ import {
   HStack,
 } from "@chakra-ui/react";
 import { IoAddOutline } from "react-icons/io5";
+import ModalForm from "./Form";
 
 const Menu = () => {
   const [isMobile] = useMediaQuery("(max-width: 481px)");
@@ -30,14 +31,7 @@ const Menu = () => {
           <Box w="90vw" justify="space-evenly" wrap="wrap" mt="4">
             {MenuList.map((item) => {
               return (
-                <Flex align='center' m="3" p='2'>
-                  <Circle bgColor="orange">
-                    <Icon p="2" color="white" w={10} h={10} as={IoAddOutline} />
-                  </Circle>
-                  <Text ml='4' fontWeight="bold" fontSize="sm">
-                    {item.label}
-                  </Text>
-                </Flex>
+                <ModalForm label={item.label} />
               );
             })}
           </Box>
