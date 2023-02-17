@@ -28,11 +28,15 @@ const Html5QrcodePlugin = (props) => {
         const config = createConfig(props);
         const verbose = props.verbose === true;
         // Suceess callback is required.
-        if (!(props.qrCodeSuccessCallback)) {
-            throw "qrCodeSuccessCallback is required callback.";
-        }
-        const html5QrcodeScanner = new Html5QrcodeScanner(qrcodeRegionId, config, verbose);
-        html5QrcodeScanner.render(props.qrCodeSuccessCallback, props.qrCodeErrorCallback);
+        function onScanSuccess(decodedText, decodedResult) {
+            console.log(`Code matched = ${decodedText}`, decodedResult);
+          }
+          
+          function onScanFailure(error) {
+            console.warn(`Code scan error = ${error}`);
+          }
+        const html5QrcodeScanner = new Html5QrcodeScanner('reader', config, false);
+        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
 
         // cleanup function when component will unmount
         return () => {
@@ -40,10 +44,10 @@ const Html5QrcodePlugin = (props) => {
                 console.error("Failed to clear html5QrcodeScanner. ", error);
             });
         };
-    }, []);
+    });
 
     return (
-        <div id={qrcodeRegionId} />
+        <div id={'reader'} />
     );
 };
 

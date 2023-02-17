@@ -12,6 +12,11 @@ const ModalForm = ({label}) => {
         setDecodedResults(prev => [...prev, decodedResult]);
     };
 
+    function onScanSuccess(decodedText, decodedResult) {
+        // Handle the scanned code as you like, for example:
+        console.log(`Code matched = ${decodedText}`, decodedResult);
+      }
+
     return (
       <>
         <Flex onClick={onOpen} align='center' m="3" p='2'>
@@ -37,10 +42,9 @@ const ModalForm = ({label}) => {
               <Html5QrcodePlugin
                     fps={10}
                     qrbox={250}
-                    disableFlip={false}
-                    qrCodeSuccessCallback={onNewScanResult}
+                    disableFlip={true}
+                    qrCodeSuccessCallback={onScanSuccess}
                 />
-                <ResultContainerPlugin results={decodedResults} />
             </ModalBody>
             <ModalFooter>
               <Button colorScheme='blue' mr={3} onClick={onClose}>
