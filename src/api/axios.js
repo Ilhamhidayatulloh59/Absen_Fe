@@ -1,5 +1,5 @@
 import axios from 'axios';
-const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const BASE_URL = "https://courageous-goat-slip.cyclic.app/api";
 
 export default axios.create({
   baseURL: BASE_URL,
