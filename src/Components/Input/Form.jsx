@@ -1,21 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, Lorem, Flex, Circle, Icon, Text } from "@chakra-ui/react";
 import { IoAddOutline } from "react-icons/io5";
-import Html5QrcodePlugin from "./Scanner";
-import ResultContainerPlugin from "./Result";
+import Scanner from "./Scanner";
 
 const ModalForm = ({label}) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const [decodedResults, setDecodedResults] = useState([]);
-    const onNewScanResult = (decodedText, decodedResult) => {
-        console.log("App [result]", decodedResult);
-        setDecodedResults(prev => [...prev, decodedResult]);
-    };
-
-    function onScanSuccess(decodedText, decodedResult) {
-        // Handle the scanned code as you like, for example:
-        console.log(`Code matched = ${decodedText}`, decodedResult);
-      }
 
     return (
       <>
@@ -39,12 +28,7 @@ const ModalForm = ({label}) => {
             <ModalCloseButton />
             <ModalBody>
               <Text>dvskmfgkmsobmsf</Text>
-              <Html5QrcodePlugin
-                    fps={10}
-                    qrbox={250}
-                    disableFlip={true}
-                    qrCodeSuccessCallback={onScanSuccess}
-                />
+              <Scanner />
             </ModalBody>
             <ModalFooter>
               <Button colorScheme='blue' mr={3} onClick={onClose}>

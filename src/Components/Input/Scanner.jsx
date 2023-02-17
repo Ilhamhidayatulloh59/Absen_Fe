@@ -1,54 +1,42 @@
-import { Html5QrcodeScanner } from 'html5-qrcode';
-import { useEffect } from 'react';
+import React, { Component } from 'react'
+import QrReader from 'react-weblineindia-qrcode-scanner'
 
-const qrcodeRegionId = "html5qr-code-full-region";
-
-// Creates the configuration object for Html5QrcodeScanner.
-const createConfig = (props) => {
-    let config = {};
-    if (props.fps) {
-        config.fps = props.fps;
+class Test extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      result: 'No result',
     }
-    if (props.qrbox) {
-        config.qrbox = props.qrbox;
+
+    this.handleScan = this.handleScan.bind(this)
+  }
+  handleScan(data){
+    this.setState({
+      result: data,
+    })
+  }
+  
+  handleError(err){
+    console.error(err)
+  }
+  render(){
+    const previewStyle = {
+      height: 240,
+      width: 320,
     }
-    if (props.aspectRatio) {
-        config.aspectRatio = props.aspectRatio;
-    }
-    if (props.disableFlip !== undefined) {
-        config.disableFlip = props.disableFlip;
-    }
-    return config;
-};
 
-const Html5QrcodePlugin = (props) => {
+    return(
+      <div>
+        <QrReader
+          delay={this.state.delay}
+        //   style={previewStyle}
+          onError={this.handleError}
+          onScan={this.handleScan}
+          />
+        <p>{this.state.result}</p>
+      </div>
+    )
+  }
+}
 
-    useEffect(() => {
-        // when component mounts
-        const config = createConfig(props);
-        const verbose = props.verbose === true;
-        // Suceess callback is required.
-        function onScanSuccess(decodedText, decodedResult) {
-            console.log(`Code matched = ${decodedText}`, decodedResult);
-          }
-          
-          function onScanFailure(error) {
-            console.warn(`Code scan error = ${error}`);
-          }
-        const html5QrcodeScanner = new Html5QrcodeScanner('reader', config, false);
-        html5QrcodeScanner.render(onScanSuccess, onScanFailure);
-
-        // cleanup function when component will unmount
-        return () => {
-            html5QrcodeScanner.clear().catch(error => {
-                console.error("Failed to clear html5QrcodeScanner. ", error);
-            });
-        };
-    });
-
-    return (
-        <div id={'reader'} />
-    );
-};
-
-export default Html5QrcodePlugin;
+export default Test
