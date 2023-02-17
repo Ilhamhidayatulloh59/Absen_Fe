@@ -27,7 +27,7 @@ const ModalForm = ({label}) => {
             <ModalHeader>{`Input ${label}`}</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              <Text>dvskmfgkmsobmsf</Text>
+              <Text>Scane QrCode Here</Text>
               <Scanner />
             </ModalBody>
             <ModalFooter>
