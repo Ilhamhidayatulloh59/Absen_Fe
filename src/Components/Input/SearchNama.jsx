@@ -42,7 +42,7 @@ const SearchNama = () => {
         <Input
           name="NIS"
           isRequired
-          isReadOnly
+          isReadOnly={value}
           value={value}
           onClick={onOpen}
           type="text"

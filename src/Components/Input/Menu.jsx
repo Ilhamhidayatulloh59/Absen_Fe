@@ -14,10 +14,12 @@ const Menu = () => {
   const [isMobile] = useMediaQuery("(max-width: 481px)");
   const navigate = useNavigate()
   const MenuList = [
+    { label: "Pulang" },
     { label: "Piket Jaros" },
-    { label: "Data Izin" },
-    { label: "Data Alfa" },
-    { label: "Data Sakit" },
+    { label: "Piket Malam" },
+    { label: "Sakit" },
+    { label: "Alfa" },
+    { label: "Izin" },
   ];
 
   const onNext = (item) => {
