@@ -10,47 +10,67 @@ import {
   Circle,
   Icon,
   useToast,
+  Tag,
+  TagLeftIcon,
+  TagLabel,
 } from "@chakra-ui/react";
 import { IoArrowForwardOutline } from "react-icons/io5";
+import { CgArrowsExchange } from "react-icons/cg";
 import { useParams } from "react-router";
 import useValue from "../../hooks/useValue";
 import SearchNIM from "./SearchNim";
+import { useState } from "react";
+import SearchNama from "./SearchNama";
+import axios from "../../api/axios";
+import { useEffect } from "react";
 
 const FormInput = ({ label }) => {
   const [isMobile] = useMediaQuery("(max-width: 481px)");
   const { value, setValue } = useValue();
+  const [searchBy, setSearchBy] = useState("NIS");
+  const [data, setData] = useState([])
   const params = useParams();
-  const toast = useToast()
+  const toast = useToast();
   var todayDate = new Date().toISOString().slice(0, 10);
 
-  const handleSubmit = async (event) => {
-      try {
-        event.preventDefault();
-        const formData = new FormData(event.target);
-        const data = {};
-        for (const [key] of formData.entries()) {
-          if (!data[key]) {
-            data[key] = formData.getAll(key)[0];
-          }
-        }
-      console.log(data);
-      toast({
-        title: "Succes",
-        description: `${data.nama} added`,
-        status: "success",
-        duration: 2000,
-      })
+  const getData = async () => {
+    try {
+        const res = await axios(`student/${value}`)
+        setData(res.data)
     } catch (err) {
         console.log(err);
-        toast({
-          title: "Failed",
-          description: `Try add again`,
-          status: 'error',
-          duration: 2000,
-        })
+    }
+  }
+ 
+  const handleSubmit = async (event) => {
+    try {
+      event.preventDefault();
+      const formData = new FormData(event.target);
+      data.date = formData.get('date')
+      data.absen = formData.get('absen')
+      console.log(data);
+
+      toast({
+        title: "Succes",
+        description: `${data.Nama} added`,
+        status: "success",
+        duration: 2000,
+      });
+    } catch (err) {
+      console.log(err);
+      toast({
+        title: "Failed",
+        description: `Try add again`,
+        status: "error",
+        duration: 2000,
+      });
     }
     setValue("");
   };
+
+  useEffect(() => {
+    getData()
+  }, [value])
 
   return (
     <Center>
@@ -64,7 +84,17 @@ const FormInput = ({ label }) => {
           borderTopRadius="3xl"
         >
           <form onSubmit={handleSubmit}>
-            <Text fontWeight="bold">{`Input ${params.jenis}`}</Text>
+            <Flex w="90vw" justify="space-between">
+              <Text fontWeight="bold">{`Input ${params.jenis}`}</Text>
+              <Tag
+                borderRadius="2xl"
+                colorScheme="orange"
+                onClick={() => setSearchBy(searchBy === "NIS" ? "Nama" : "NIS")}
+              >
+                <TagLeftIcon boxSize="16px" as={CgArrowsExchange} />
+                <TagLabel>{searchBy === "NIS" ? "Nama" : "NIS"}</TagLabel>
+              </Tag>
+            </Flex>
             <Box w="90vw">
               <Flex mt="4" align="center" justify="space-between">
                 <FormLabel>Tanggal</FormLabel>
@@ -86,10 +116,17 @@ const FormInput = ({ label }) => {
                   w="60vw"
                 />
               </Flex>
-              <Flex mt="4" align="center" justify="space-between">
-                <FormLabel>NIS</FormLabel>
-                <SearchNIM />
-              </Flex>
+              {searchBy === "NIS" ? (
+                <Flex mt="4" align="center" justify="space-between">
+                  <FormLabel>NIS</FormLabel>
+                  <SearchNIM />
+                </Flex>
+              ) : (
+                <Flex mt="4" align="center" justify="space-between">
+                  <FormLabel>{value ? "NIS" : "Nama"}</FormLabel>
+                  <SearchNama />
+                </Flex>
+              )}
               {value ? (
                 <>
                   <Flex mt="4" align="center" justify="space-between">
@@ -98,7 +135,7 @@ const FormInput = ({ label }) => {
                       name="nama"
                       isReadOnly
                       type="text"
-                      defaultValue={"Ilham"}
+                      defaultValue={data?.Nama}
                       w="60vw"
                     />
                   </Flex>
@@ -108,7 +145,7 @@ const FormInput = ({ label }) => {
                       name="kelas"
                       isReadOnly
                       type="text"
-                      defaultValue={"1A KUI Pa"}
+                      defaultValue={data?.pondok}
                       w="60vw"
                     />
                   </Flex>
