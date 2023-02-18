@@ -13,6 +13,7 @@ import { useParams } from "react-router";
 import useValue from "../../hooks/useValue";
 import Scanner from "./Scanner";
 import { MdOutlineClose } from "react-icons/md";
+import SearchNIM from "./SearchNim";
 
 const FormInput = ({ label }) => {
   const [isMobile] = useMediaQuery("(max-width: 481px)");
@@ -43,10 +44,7 @@ const FormInput = ({ label }) => {
             </Flex>
             <Flex mt="4" align="center" justify="space-between">
               <FormLabel>NIS</FormLabel>
-              <InputGroup w="60vw">
-                <Input value={value} type="text" />
-                <InputRightElement children={value ? <MdOutlineClose onClick={() => setValue('')}/> : <Scanner />} />
-              </InputGroup>
+              <SearchNIM/>
             </Flex>
           </Box>
         </Box>
