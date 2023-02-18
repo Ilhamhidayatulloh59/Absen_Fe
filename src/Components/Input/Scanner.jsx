@@ -14,7 +14,7 @@ import useValue from "../../hooks/useValue";
 import { MdOutlineQrCodeScanner } from "react-icons/md";
 
 const Scanner = () => {
-  const [ setResult] = useState("No result");
+  const [ result, setResult] = useState("No result");
   const { setValue } = useValue();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
