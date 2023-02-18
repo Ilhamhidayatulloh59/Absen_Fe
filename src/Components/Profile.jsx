@@ -1,10 +1,6 @@
-import { useEffect, useRef, useState } from "react";
 import {
   Box,
-  Image,
-  Tag,
   Avatar,
-  Icon,
   useMediaQuery,
   Flex,
   Center,

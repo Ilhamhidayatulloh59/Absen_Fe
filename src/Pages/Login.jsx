@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import {
   Box,
   Icon,
@@ -23,7 +23,7 @@ import * as Yup from 'yup';
 import { Field, ErrorMessage, Formik, Form } from 'formik';
 
 const Login = () => {
-  const { auth ,setAuth } = useAuth()
+  const { setAuth } = useAuth()
   const [show, setShow] = useState(false)
   const [isMobile] = useMediaQuery("(max-width: 481px)");
   const navigate = useNavigate()

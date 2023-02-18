@@ -2,22 +2,21 @@ import {
   Box,
   useMediaQuery,
   Center,
-  Text,
 } from "@chakra-ui/react";
-import Profile from "../Components/Profile";
+import FormInput from "../Components/Input/Form";
+import { useParams } from "react-router";
 
-const Setting = () => {
+const Form = () => {
   const [isMobile] = useMediaQuery("(max-width: 481px)");
+  const params = useParams()
 
   return (
     <Center>
       {isMobile ? (
         <Box
-          w="100vw"
-          borderBottomRadius="3xl"
+            w="100vw" h="100vh" bgColor="orange"
         >
-          <Profile />
-          <Text>Setting</Text>
+            <FormInput label={params.jenis}/>
         </Box>
       ) : (
         "Not Found"
@@ -26,4 +25,4 @@ const Setting = () => {
   );
 };
 
-export default Setting;
+export default Form;

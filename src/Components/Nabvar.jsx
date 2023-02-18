@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from "react";
 import {
   Box,
   Image,
@@ -7,7 +6,7 @@ import {
   Flex,
   Icon,
 } from "@chakra-ui/react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { IoArrowBackOutline } from "react-icons/io5";
 
 const NavBar = () => {
@@ -22,7 +21,7 @@ const NavBar = () => {
   });
 
   const onBack = () => {
-    navigate('/')
+    navigate(-1)
   }
 
   return (

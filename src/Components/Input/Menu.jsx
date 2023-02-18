@@ -1,27 +1,28 @@
-import { useEffect, useRef, useState } from "react";
 import {
   Box,
   Icon,
   useMediaQuery,
   Flex,
   Center,
-  VStack,
   Text,
   Circle,
-  HStack,
 } from "@chakra-ui/react";
 import { IoAddOutline } from "react-icons/io5";
-import ModalForm from "./Form";
+import { useNavigate } from "react-router";
 
 const Menu = () => {
   const [isMobile] = useMediaQuery("(max-width: 481px)");
-
+  const navigate = useNavigate()
   const MenuList = [
     { label: "Piket Jaros" },
-    { label: "Data Izin"},
-    { label: "Data Alfa"},
-    { label: "Data Sakit"}
+    { label: "Data Izin" },
+    { label: "Data Alfa" },
+    { label: "Data Sakit" },
   ];
+
+  const onNext = (item) => {
+    navigate(`/input/${item}`)
+  }
 
   return (
     <Center>
@@ -31,7 +32,14 @@ const Menu = () => {
           <Box w="90vw" justify="space-evenly" wrap="wrap" mt="4">
             {MenuList.map((item) => {
               return (
-                <ModalForm label={item.label} />
+                <Flex onClick={() => onNext(item.label)} align="center" m="3" p="2">
+                  <Circle bgColor="orange">
+                    <Icon p="2" color="white" w={10} h={10} as={IoAddOutline} />
+                  </Circle>
+                  <Text ml="4" fontWeight="bold" fontSize="sm">
+                    {item.label}
+                  </Text>
+                </Flex>
               );
             })}
           </Box>

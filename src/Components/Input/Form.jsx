@@ -1,44 +1,60 @@
-import { useEffect, useRef, useState } from "react";
-import { Button, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure, Lorem, Flex, Circle, Icon, Text } from "@chakra-ui/react";
-import { IoAddOutline } from "react-icons/io5";
+import {
+  Box,
+  useMediaQuery,
+  Flex,
+  Center,
+  Text,
+  FormLabel,
+  Input,
+  InputGroup,
+  InputRightElement,
+} from "@chakra-ui/react";
+import { useParams } from "react-router";
+import useValue from "../../hooks/useValue";
 import Scanner from "./Scanner";
+import { MdOutlineClose } from "react-icons/md";
 
-const ModalForm = ({label}) => {
-    const { isOpen, onOpen, onClose } = useDisclosure()
+const FormInput = ({ label }) => {
+  const [isMobile] = useMediaQuery("(max-width: 481px)");
+  const params = useParams();
+  var todayDate = new Date().toISOString().slice(0, 10);
+  const { value, setValue } = useValue();
 
-    return (
-      <>
-        <Flex onClick={onOpen} align='center' m="3" p='2'>
-            <Circle bgColor="orange">
-            <Icon p="2" color="white" w={10} h={10} as={IoAddOutline} />
-            </Circle>
-            <Text ml='4' fontWeight="bold" fontSize="sm">
-            {label}
-            </Text>
-        </Flex>
-        <Modal
-          isCentered
-          onClose={onClose}
-          isOpen={isOpen}
-          motionPreset='slideInBottom'
+  return (
+    <Center>
+      {isMobile ? (
+        <Box
+          w="100vw"
+          p="4"
+          h="90vh"
+          mt="10vh"
+          bgColor="white"
+          borderTopRadius="3xl"
         >
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>{`Input ${label}`}</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody>
-              <Text>Scane QrCode Here</Text>
-              <Scanner />
-            </ModalBody>
-            <ModalFooter>
-              <Button colorScheme='blue' mr={3} onClick={onClose}>
-                Close
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Modal>
-      </>
-    )
-  }
+          <Text fontWeight="bold">{`Input ${params.jenis}`}</Text>
+          <Box w="90vw">
+            <Flex mt="4" align="center" justify="space-between">
+              <FormLabel>Tanggal</FormLabel>
+              <Input type="date" w="60vw" defaultValue={todayDate} />
+            </Flex>
+            <Flex mt="4" align="center" justify="space-between">
+              <FormLabel>Absen</FormLabel>
+              <Input isDisabled type="text" value={label} w="60vw" />
+            </Flex>
+            <Flex mt="4" align="center" justify="space-between">
+              <FormLabel>NIS</FormLabel>
+              <InputGroup w="60vw">
+                <Input value={value} type="text" />
+                <InputRightElement children={value ? <MdOutlineClose onClick={() => setValue('')}/> : <Scanner />} />
+              </InputGroup>
+            </Flex>
+          </Box>
+        </Box>
+      ) : (
+        "Mobile Only"
+      )}
+    </Center>
+  );
+};
 
-  export default ModalForm
+export default FormInput;

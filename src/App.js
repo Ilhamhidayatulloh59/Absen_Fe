@@ -13,6 +13,7 @@ import Report from './Pages/Report';
 import Setting from './Pages/Setting';
 import RequireAuth from './Components/RequireAuth';
 import NavBar from './Components/Nabvar';
+import Form from './Pages/Form';
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
               {
                 path: '/profile',
                 element: <Profile />,
+              },
+              {
+                path: '/input/:jenis',
+                element: <Form />,
               },
             ],
           },
