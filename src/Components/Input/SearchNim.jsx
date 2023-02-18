@@ -23,7 +23,7 @@ const SearchNIM = () => {
   return (
     <>
       <InputGroup w="60vw">
-        <Input value={value} onClick={onOpen} isDisabled={value} type="text"/>
+        <Input name="NIS" isRequired isReadOnly={value} value={value} onClick={onOpen} type="text"/>
         <InputRightElement
           children={
             value ? (
