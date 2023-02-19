@@ -9,10 +9,10 @@ import {
   Circle,
 } from "@chakra-ui/react";
 import {
-  IoReceiptOutline,
-  IoPersonAddOutline,
-  IoSettingsOutline,
-  IoPersonCircleOutline,
+  IoReceiptSharp,
+  IoPersonAddSharp,
+  IoSettingsSharp,
+  IoPersonCircleSharp,
 } from "react-icons/io5";
 import { Link } from "react-router-dom";
 
@@ -20,10 +20,10 @@ const Menu = () => {
   const [isMobile] = useMediaQuery("(max-width: 481px)");
 
   const MenuList = [
-    { label: "input", icon: IoPersonAddOutline },
-    { label: "report", icon: IoReceiptOutline },
-    { label: "setting", icon: IoSettingsOutline },
-    { label: "profile", icon: IoPersonCircleOutline },
+    { label: "input", icon: IoPersonAddSharp, colour: "orange" },
+    { label: "report", icon: IoReceiptSharp, colour: "green" },
+    { label: "setting", icon: IoSettingsSharp, colour: "pink" },
+    { label: "profile", icon: IoPersonCircleSharp, colour: "blue" },
   ];
 
   return (
@@ -42,10 +42,10 @@ const Menu = () => {
                     as={Link}
                     to={`/${item.label}`}
                   >
-                    <Circle bgColor="orange">
-                      <Icon p="2" color="white" w={10} h={10} as={item.icon} />
+                    <Circle bgColor="gray.50">
+                      <Icon p="2" color={item.colour} w={10} h={10} as={item.icon} />
                     </Circle>
-                    <Text fontWeight="bold" fontSize="sm">
+                    <Text fontSize="sm">
                       {item.label}
                     </Text>
                   </VStack>

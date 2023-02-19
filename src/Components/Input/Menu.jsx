@@ -6,20 +6,28 @@ import {
   Center,
   Text,
   Circle,
+  VStack,
 } from "@chakra-ui/react";
-import { IoAddOutline } from "react-icons/io5";
+import {
+  FcHome,
+  FcDepartment,
+  FcNightPortrait,
+  FcManager,
+  FcPortraitMode,
+  FcDisapprove,
+} from "react-icons/fc";
 import { useNavigate } from "react-router";
 
 const Menu = () => {
   const [isMobile] = useMediaQuery("(max-width: 481px)");
   const navigate = useNavigate();
   const MenuList = [
-    { label: "Pulang" },
-    { label: "Piket Jaros" },
-    { label: "Piket Malam" },
-    { label: "Sakit" },
-    { label: "Alfa" },
-    { label: "Izin" },
+    { label: "Pulang", icon: FcHome },
+    { label: "Piket Jaros", icon: FcManager },
+    { label: "Piket Malam", icon: FcNightPortrait },
+    { label: "Sakit", icon: FcDepartment },
+    { label: "Alfa", icon: FcDisapprove },
+    { label: "Izin", icon: FcPortraitMode },
   ];
 
   const onNext = (item) => {
@@ -30,33 +38,31 @@ const Menu = () => {
     <Center>
       {isMobile ? (
         <Box mt="4">
-          <Text fontWeight="bold">Input</Text>
-          <Box mt="2" boxShadow="base" p="2" borderRadius="sm">
-            <Box w="90vw" justify="space-evenly" wrap="wrap">
-              {MenuList.map((item) => {
+          <Text fontWeight="bold">Input Feature</Text>
+          <Box mt="2" p="2" boxShadow="base" borderRadius="md">
+            <Flex w="90vw" justify="space-evenly" wrap="wrap" mt="4">
+              {MenuList.map((item, index) => {
                 return (
-                  <Flex
+                  <VStack
+                    key={index}
+                    w="30vw"
+                    mb="3"
                     onClick={() => onNext(item.label)}
-                    align="center"
-                    m="3"
-                    p="2"
                   >
-                    <Circle bgColor="orange">
+                    <Circle bgColor="gray.50">
                       <Icon
                         p="2"
-                        color="white"
+                        color={item.colour}
                         w={10}
                         h={10}
-                        as={IoAddOutline}
+                        as={item.icon}
                       />
                     </Circle>
-                    <Text ml="4" fontWeight="bold" fontSize="sm">
-                      {item.label}
-                    </Text>
-                  </Flex>
+                    <Text fontSize="sm">{item.label}</Text>
+                  </VStack>
                 );
               })}
-            </Box>
+            </Flex>
           </Box>
         </Box>
       ) : (
