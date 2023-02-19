@@ -14,6 +14,7 @@ import Setting from './Pages/Setting';
 import RequireAuth from './Components/RequireAuth';
 import NavBar from './Components/Nabvar';
 import Form from './Pages/Form';
+import Caraousel from './Components/Caraousel/Caraousel';
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,7 @@ const router = createBrowserRouter([
                 element: [
                   <Name key={1} />,
                   <Menu key={2} />,
+                  <Caraousel key={3}/>,
                 ],
               },
               {
