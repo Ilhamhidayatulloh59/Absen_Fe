@@ -10,23 +10,33 @@ import "swiper/css/navigation";
 import "./styles.css";
 
 // import required modules
-import { Pagination, Navigation } from "swiper";
+import { Keyboard, Pagination, EffectCoverflow } from "swiper";
 import { Box, Flex } from "@chakra-ui/layout";
 
 export default function Caraousel() {
   return (
     <>
-      <Flex borderRadius='xl' justify='center' overflow='hidden' mt='4'>
-        <Swiper
-          slidesPerView={1}
-          loop={true}
-          pagination={{
-            clickable: true,
-          }}
-          // navigation={true}
-          modules={[Pagination, Navigation]}
-          className="mySwiper"
-        >
+      <Flex >
+      <Swiper
+        effect={"coverflow"}
+        grabCursor={true}
+        centeredSlides={true}
+        slidesPerView={"auto"}
+        keyboard={{
+          enabled: true,
+        }}
+        coverflowEffect={{
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: true,
+        }}
+        pagination={true}
+        loop={true}
+        modules={[Keyboard, EffectCoverflow, Pagination]}
+        className="mySwiper"
+      >
           <SwiperSlide>
             <img src="https://darussalamkasomalang.sch.id/images/banner/banneraja.jpg" />
           </SwiperSlide>
