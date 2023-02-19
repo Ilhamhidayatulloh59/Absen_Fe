@@ -45,8 +45,8 @@ const router = createBrowserRouter([
                 path: '/',
                 element: [
                   <Name key={1} />,
+                  <Caraousel/>,
                   <Menu key={2} />,
-                  <Caraousel/>
                 ],
               },
               {
