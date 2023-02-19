@@ -27,6 +27,7 @@ import SearchNama from "./SearchNama";
 import axios from "../../api/axios";
 import { useEffect } from "react";
 import AddDates from "./AddDates";
+import TableDates from "./TableDates";
 
 const FormInputPulang = ({ label }) => {
   const [isMobile] = useMediaQuery("(max-width: 481px)");
@@ -35,7 +36,7 @@ const FormInputPulang = ({ label }) => {
   const [data, setData] = useState([]);
   const params = useParams();
   const toast = useToast();
-  var todayDate = new Date().toISOString().slice(0, 10);
+  var todayDate = new Date().toISOString().toString().slice(0, 10);
   const [dates, setDates] = useState([]);
 
   const getData = async () => {
@@ -47,9 +48,9 @@ const FormInputPulang = ({ label }) => {
     }
   };
 
-  function handleMessage(message) {
-    dates.push(message);
-    setDates(dates);
+  const onAdd = (item) => {
+    dates.push(item);
+    setDates(dates.sort((a, b) => new Date(b.date) - new Date(a.date)));
   }
 
   const handleSubmit = async (event) => {
@@ -76,11 +77,12 @@ const FormInputPulang = ({ label }) => {
       });
     }
     setValue("");
+    setDates([]);
   };
 
   useEffect(() => {
     getData();
-  }, [value]);
+  }, [value, dates]);
 
   return (
     <Center>
@@ -150,15 +152,11 @@ const FormInputPulang = ({ label }) => {
                   </Stack>
                 </RadioGroup>
               </Flex>
-              <Flex mt="4"  justify="space-between">
+              <Flex mt="4" justify="space-between">
                 <FormLabel>Tasreh</FormLabel>
                 <Box>
-                {dates.map(item => {
-                    return (
-                        <Text>{item}</Text>
-                    )
-                })}
-                  <AddDates onAdd={handleMessage} dates={dates} />
+                  <TableDates onAdd={onAdd} dates={dates} />
+                  <AddDates onAdd={onAdd} dates={dates} />
                 </Box>
               </Flex>
               <Flex mt="4" justify="end">

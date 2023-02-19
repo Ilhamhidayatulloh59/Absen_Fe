@@ -11,22 +11,68 @@ import {
   ModalContent,
   ModalOverlay,
 } from "@chakra-ui/modal";
-import React, { useState } from "react";
-import { useRef } from "react";
+import React, { useRef } from "react";
 
-const AddDates = ({ onAdd, dates }) => {
+const AddDates = ({ onAdd }) => {
   const date = useRef("");
+  const jp = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [maxDate, setMaxDate] = useState(new Date(new Date().setDate(new Date().getDate() - 1)).toISOString().slice(0, 10))
-  const MAX = new Date(maxDate).setDate(new Date(maxDate).getDate() + 1);
-  var todayDate = new Date(MAX).toISOString().slice(0, 10);
-  
+
+  var todayDate = new Date().toISOString().slice(0, 10);
+
   const handleClick = () => {
-      onAdd(date.current.value);
-      onClose();
-      dates.sort((a, b) => new Date(b) - new Date(a))
-      setMaxDate(dates[0])
+    onAdd({ date: date.current.value, time: jp.current.value });
+    onClose();
   };
+
+  function setDefaultValue() {
+    const dayOfWeek = new Date(date.current ? date.current.value : "").getDay();
+
+    switch (dayOfWeek) {
+      case 0:
+        if (jp.current) {
+          jp.current.defaultValue = "5";
+        }
+        break;
+      case 1:
+        if (jp.current) {
+          jp.current.defaultValue = "7";
+        }
+        break;
+      case 2:
+        if (jp.current) {
+          jp.current.defaultValue = "7";
+        }
+        break;
+      case 3:
+        if (jp.current) {
+          jp.current.defaultValue = "7";
+        }
+        break;
+      case 4:
+        if (jp.current) {
+          jp.current.defaultValue = "5";
+        }
+        break;
+      case 5:
+        if (jp.current) {
+          jp.current.defaultValue = "0";
+        }
+        break;
+      case 6:
+        if (jp.current) {
+          jp.current.defaultValue = "7";
+        }
+        break;
+      default:
+        if (jp.current) {
+          jp.current.defaultValue = "";
+        }
+        break;
+    }
+  }
+
+  setDefaultValue();
 
   return (
     <>
@@ -44,13 +90,17 @@ const AddDates = ({ onAdd, dates }) => {
                 <FormLabel>Tanggal</FormLabel>
                 <Input
                   ref={date}
+                  defaultValue={todayDate}
                   isRequired
                   type="date"
                   w="60vw"
-                  defaultValue={todayDate}
                 />
               </Flex>
-              <Button onClick={handleClick}>add</Button>
+              <Flex mt="4" align="center" justify="space-between">
+                <FormLabel>Jam</FormLabel>
+                <Input type="number" w="60vw" ref={jp} />
+              </Flex>
+              <Button onClick={() => handleClick()}>add</Button>
             </Box>
           </ModalBody>
         </ModalContent>
