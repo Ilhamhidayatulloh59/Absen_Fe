@@ -24,15 +24,20 @@ import SearchNama from "./SearchNama";
 import axios from "../../api/axios";
 import { useEffect } from "react";
 import SearchPenyakit from "./SearchPenyakit";
+import DayDefault from "./Day";
+import TimeDefault from "./Time";
+import TimeCust from "./TimeCust";
 
 const FormInputSakit = ({ label }) => {
   const [isMobile] = useMediaQuery("(max-width: 481px)");
   const { value, setValue } = useValue();
   const [searchBy, setSearchBy] = useState("NIS");
   const [data, setData] = useState([]);
+  const [time, setTime] = useState([]);
+  const [cust, setCust] = useState(false);
   const params = useParams();
   const toast = useToast();
-  var todayDate = new Date().toISOString().slice(0, 10);
+  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const [penyakit, setPenyakit] = useState("");
 
   const getData = async () => {
@@ -55,6 +60,8 @@ const FormInputSakit = ({ label }) => {
       data.date = formData.get("date");
       data.absen = formData.get("absen");
       data.penyakit = penyakit;
+      data.jam = time.length ? time.length : formData.get("time")
+      data.jp = time.join(', ')
       console.log(data);
 
       toast({
@@ -104,21 +111,6 @@ const FormInputSakit = ({ label }) => {
               </Tag>
             </Flex>
             <Box w="90vw">
-              {searchBy === "NIS" ? (
-                <Flex mt="4" align="center" justify="space-between">
-                  <FormLabel>NIS</FormLabel>
-                  <SearchNIM />
-                </Flex>
-              ) : (
-                <Flex mt="4" align="center" justify="space-between">
-                  <FormLabel>{value ? "NIS" : "Nama"}</FormLabel>
-                  <SearchNama />
-                </Flex>
-              )}
-              <Flex mt="4" align="center" justify="space-between">
-                <FormLabel>Penyakit</FormLabel>
-                <SearchPenyakit onAdd={onAdd} penyakit={penyakit} />
-              </Flex>
               <Flex mt="4" align="center" justify="space-between">
                 <FormLabel>Tanggal</FormLabel>
                 <Input
@@ -126,8 +118,26 @@ const FormInputSakit = ({ label }) => {
                   isRequired
                   type="date"
                   w="60vw"
-                  defaultValue={todayDate}
+                  defaultValue={date}
+                  onChange={(e) => setDate(e.target.value)}
                 />
+              </Flex>
+              <Flex mt="4" align="center" justify="space-between">
+                <FormLabel>Hari</FormLabel>
+                <DayDefault date={date} />
+              </Flex>
+              <Flex mt="4" align="center" justify="space-between">
+                {!cust ? (
+                  <>
+                    <FormLabel>Jam</FormLabel>
+                    <TimeDefault cust={setCust} date={date} />
+                  </>
+                ) : (
+                  <>
+                    <FormLabel>Jam Ke -</FormLabel>
+                    <TimeCust setTime={setTime} />
+                  </>
+                )}
               </Flex>
               <Flex mt="4" align="center" justify="space-between">
                 <FormLabel>Absen</FormLabel>
@@ -139,6 +149,21 @@ const FormInputSakit = ({ label }) => {
                   w="60vw"
                 />
               </Flex>
+              <Flex mt="4" align="center" justify="space-between">
+                <FormLabel>Penyakit</FormLabel>
+                <SearchPenyakit onAdd={onAdd} penyakit={penyakit} />
+              </Flex>
+              {searchBy === "NIS" ? (
+                <Flex mt="4" align="center" justify="space-between">
+                  <FormLabel>NIS</FormLabel>
+                  <SearchNIM />
+                </Flex>
+              ) : (
+                <Flex mt="4" align="center" justify="space-between">
+                  <FormLabel>{value ? "NIS" : "Nama"}</FormLabel>
+                  <SearchNama />
+                </Flex>
+              )}
               {value ? (
                 <>
                   <Flex mt="4" align="center" justify="space-between">

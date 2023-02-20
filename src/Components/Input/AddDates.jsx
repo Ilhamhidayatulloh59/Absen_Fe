@@ -17,12 +17,12 @@ import { IoArrowForwardOutline } from "react-icons/io5";
 
 const AddDates = ({ onAdd, dates, tgl }) => {
   const date = useRef("");
-  const jp = useRef();
+  const timeRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
   var todayDate = new Date(new Date(tgl).setDate(new Date(tgl).getDate() + dates.length)).toISOString().slice(0, 10);
 
   const handleClick = () => {
-    onAdd({ date: date.current.value, time: jp.current.value });
+    onAdd({ date: date.current.value, time: timeRef.current.value });
     onClose();
   };
 
@@ -31,43 +31,43 @@ const AddDates = ({ onAdd, dates, tgl }) => {
 
     switch (dayOfWeek) {
       case 0:
-        if (jp.current) {
-          jp.current.defaultValue = "5";
+        if (timeRef.current) {
+          timeRef.current.defaultValue = 5;
         }
         break;
       case 1:
-        if (jp.current) {
-          jp.current.defaultValue = "7";
+        if (timeRef.current) {
+          timeRef.current.defaultValue = 7;
         }
         break;
       case 2:
-        if (jp.current) {
-          jp.current.defaultValue = "7";
+        if (timeRef.current) {
+          timeRef.current.defaultValue = 7;
         }
         break;
       case 3:
-        if (jp.current) {
-          jp.current.defaultValue = "7";
+        if (timeRef.current) {
+          timeRef.current.defaultValue = 7;
         }
         break;
       case 4:
-        if (jp.current) {
-          jp.current.defaultValue = "5";
+        if (timeRef.current) {
+          timeRef.current.defaultValue = 5;
         }
         break;
       case 5:
-        if (jp.current) {
-          jp.current.defaultValue = "0";
+        if (timeRef.current) {
+          timeRef.current.defaultValue = 0;
         }
         break;
       case 6:
-        if (jp.current) {
-          jp.current.defaultValue = "7";
+        if (timeRef.current) {
+          timeRef.current.defaultValue = 7;
         }
         break;
       default:
-        if (jp.current) {
-          jp.current.defaultValue = "";
+        if (timeRef.current) {
+          timeRef.current.defaultValue = 0
         }
         break;
     }
@@ -101,7 +101,7 @@ const AddDates = ({ onAdd, dates, tgl }) => {
               </Flex>
               <Flex mt="4" align="center" justify="space-between">
                 <FormLabel>Jam</FormLabel>
-                <Input type="number" w="60vw" ref={jp} />
+                <Input type="number" w="60vw" ref={timeRef} />
               </Flex>
               <Flex mt="4" justify="end">
                 <Circle

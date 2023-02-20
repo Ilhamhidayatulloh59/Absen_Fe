@@ -13,6 +13,8 @@ import {
   Tag,
   TagLeftIcon,
   TagLabel,
+  HStack,
+  Stack,
 } from "@chakra-ui/react";
 import { IoArrowForwardOutline } from "react-icons/io5";
 import { CgArrowsExchange } from "react-icons/cg";
@@ -23,34 +25,43 @@ import { useState } from "react";
 import SearchNama from "./SearchNama";
 import axios from "../../api/axios";
 import { useEffect } from "react";
+import DayDefault from "./Day";
+import TimeDefault from "./Time";
+import TimeCust from "./TimeCust";
 
 const FormInput = ({ label }) => {
   const [isMobile] = useMediaQuery("(max-width: 481px)");
   const { value, setValue } = useValue();
   const [searchBy, setSearchBy] = useState("NIS");
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
+  const [time, setTime] = useState([]);
+  const [cust, setCust] = useState(false);
+  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
+  const [isSubmit, setisSubmit] = useState(false);
   const params = useParams();
   const toast = useToast();
-  var todayDate = new Date().toISOString().slice(0, 10);
 
   const getData = async () => {
     try {
-        const res = await axios(`student/${value}`)
-        setData(res.data)
+      const res = await axios.get(`student/${value}`);
+      setData(res.data);
     } catch (err) {
-        console.log(err);
+      console.log(err);
     }
-  }
- 
+  };
+
   const handleSubmit = async (event) => {
     try {
+      setisSubmit(true);
       event.preventDefault();
       const formData = new FormData(event.target);
-      data.date = formData.get('date')
-      data.absen = formData.get('absen')
+      data.date = formData.get("date");
+      data.absen = formData.get("absen");
+      data.jam = time.length ? time.length : formData.get("time")
+      data.jp = time.join(', ')
       console.log(data);
 
-      const res = await axios('absen', {data})
+      setisSubmit(false);
 
       toast({
         title: "Succes",
@@ -68,11 +79,12 @@ const FormInput = ({ label }) => {
       });
     }
     setValue("");
+    setCust(false)
   };
 
   useEffect(() => {
-    getData()
-  }, [value])
+    getData();
+  }, [value]);
 
   return (
     <Center>
@@ -105,8 +117,26 @@ const FormInput = ({ label }) => {
                   isRequired
                   type="date"
                   w="60vw"
-                  defaultValue={todayDate}
+                  defaultValue={date}
+                  onChange={(e) => setDate(e.target.value)}
                 />
+              </Flex>
+              <Flex mt="4" align="center" justify="space-between">
+                <FormLabel>Hari</FormLabel>
+                <DayDefault date={date} />
+              </Flex>
+              <Flex mt="4" align="center" justify="space-between">
+                {!cust ? (
+                  <>
+                    <FormLabel>Jam</FormLabel>
+                    <TimeDefault jenis={params.jenis} cust={setCust} date={date} />
+                  </>
+                ) : (
+                  <>
+                    <FormLabel>Jam Ke -</FormLabel>
+                    <TimeCust setTime={setTime} />
+                  </>
+                )}
               </Flex>
               <Flex mt="4" align="center" justify="space-between">
                 <FormLabel>Absen</FormLabel>
@@ -154,6 +184,7 @@ const FormInput = ({ label }) => {
                   <Flex mt="4" justify="end">
                     <Circle
                       as={Button}
+                      isLoading={isSubmit}
                       type="submit"
                       bgColor="orange"
                       p="3"
