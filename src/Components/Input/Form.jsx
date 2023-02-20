@@ -50,6 +50,8 @@ const FormInput = ({ label }) => {
       data.absen = formData.get('absen')
       console.log(data);
 
+      const res = await axios('absen', {data})
+
       toast({
         title: "Succes",
         description: `${data.Nama} added`,

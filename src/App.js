@@ -102,7 +102,7 @@ function App() {
   useEffect(() => {
     token ?
     keepLogin() : console.log('login first');
-  })
+  }, [])
 
   return (
     <main>

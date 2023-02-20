@@ -4,7 +4,6 @@ import {
   useMediaQuery,
   Flex,
   Center,
-  VStack,
   Text,
 } from "@chakra-ui/react";
 import useAuth from "../hooks/useAuth";
@@ -16,13 +15,12 @@ const Profile = () => {
   return (
     <Center>
       {isMobile ? (
-        <Box w="100vw" h='36' justify="center" align="start">
+        <Box w="100vw" justify="center" align="start">
           <Box bgColor="orange" w="100vw" h='10' borderBottomRadius="xl" />
           <Center mt='-8' >
             <Box
               boxShadow="base"
               w="90vw"
-              h='32'
               zIndex="2"
               position="relative"
               bgColor="white"
