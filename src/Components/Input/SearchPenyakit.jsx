@@ -45,7 +45,7 @@ const SearchPenyakit = ({ onAdd, penyakit }) => {
           name="penyakit"
           isRequired
           isReadOnly={penyakit}
-          value={penyakit}
+          defaultValue={penyakit}
           onClick={onOpen}
           type="text"
         />

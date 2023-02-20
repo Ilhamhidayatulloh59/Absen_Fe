@@ -13,61 +13,59 @@ import {
   ModalOverlay,
 } from "@chakra-ui/modal";
 import React, { useRef } from "react";
+import { useState } from "react";
 import { IoArrowForwardOutline } from "react-icons/io5";
+import DayDefault from "./Day";
+import TableDates from "./TableDates";
 
-const AddDates = ({ onAdd, dates, tgl }) => {
-  const date = useRef("");
-  const timeRef = useRef();
+const AddDates = ({ onAdd, dates }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  var todayDate = new Date(new Date(tgl).setDate(new Date(tgl).getDate() + dates.length)).toISOString().slice(0, 10);
+  const [date, setDate] = useState("");
 
-  const handleClick = () => {
-    onAdd({ date: date.current.value, time: timeRef.current.value });
-    onClose();
-  };
+  const time = useRef();
 
   function setDefaultValue() {
-    const dayOfWeek = new Date(date.current ? date.current.value : "").getDay();
+    const dayOfWeek = new Date(date).getDay();
 
     switch (dayOfWeek) {
       case 0:
-        if (timeRef.current) {
-          timeRef.current.defaultValue = 5;
+        if (time.current) {
+          time.current.defaultValue = 5;
         }
         break;
       case 1:
-        if (timeRef.current) {
-          timeRef.current.defaultValue = 7;
+        if (time.current) {
+          time.current.defaultValue = 7;
         }
         break;
       case 2:
-        if (timeRef.current) {
-          timeRef.current.defaultValue = 7;
+        if (time.current) {
+          time.current.defaultValue = 7;
         }
         break;
       case 3:
-        if (timeRef.current) {
-          timeRef.current.defaultValue = 7;
+        if (time.current) {
+          time.current.defaultValue = 7;
         }
         break;
       case 4:
-        if (timeRef.current) {
-          timeRef.current.defaultValue = 5;
+        if (time.current) {
+          time.current.defaultValue = 5;
         }
         break;
       case 5:
-        if (timeRef.current) {
-          timeRef.current.defaultValue = 0;
+        if (time.current) {
+          time.current.defaultValue = 0;
         }
         break;
       case 6:
-        if (timeRef.current) {
-          timeRef.current.defaultValue = 7;
+        if (time.current) {
+          time.current.defaultValue = 7;
         }
         break;
       default:
-        if (timeRef.current) {
-          timeRef.current.defaultValue = 0
+        if (time.current) {
+          time.current.defaultValue = 0;
         }
         break;
     }
@@ -75,8 +73,15 @@ const AddDates = ({ onAdd, dates, tgl }) => {
 
   setDefaultValue();
 
+  const handleClick = () => {
+    dates.push({ date, time: document.getElementsByName("time")[0].value });
+    onAdd(dates.sort((a, b) => new Date(b.date) - new Date(a.date)));
+    onClose();
+  };
+
   return (
     <>
+      <TableDates onAdd={onAdd} dates={dates} />
       <Button w="60vw" variant="outline" colorScheme="orange" onClick={onOpen}>
         Add
       </Button>
@@ -92,28 +97,35 @@ const AddDates = ({ onAdd, dates, tgl }) => {
               <Flex mt="4" align="center" justify="space-between">
                 <FormLabel>Tanggal</FormLabel>
                 <Input
-                  ref={date}
-                  defaultValue={todayDate}
                   isRequired
                   type="date"
                   w="60vw"
+                  onChange={(e) => setDate(e.target.value)}
                 />
               </Flex>
-              <Flex mt="4" align="center" justify="space-between">
-                <FormLabel>Jam</FormLabel>
-                <Input type="number" w="60vw" ref={timeRef} />
-              </Flex>
-              <Flex mt="4" justify="end">
-                <Circle
-                  onClick={() => handleClick()}
-                  as={Button}
-                  bgColor="orange"
-                  p="3"
-                  color="white"
-                >
-                  <Icon w={5} h={5} as={IoArrowForwardOutline} />
-                </Circle>
-              </Flex>
+              {date ? (
+                <>
+                  <Flex mt="4" align="center" justify="space-between">
+                    <FormLabel>Hari</FormLabel>
+                    <DayDefault date={date} />
+                  </Flex>
+                  <Flex mt="4" align="center" justify="space-between">
+                    <FormLabel>Jam</FormLabel>
+                    <Input type="number" w="60vw" name="time" ref={time} />
+                  </Flex>
+                  <Flex mt="4" justify="end">
+                    <Circle
+                      onClick={handleClick}
+                      as={Button}
+                      bgColor="orange"
+                      p="3"
+                      color="white"
+                    >
+                      <Icon w={5} h={5} as={IoArrowForwardOutline} />
+                    </Circle>
+                  </Flex>
+                </>
+              ) : null}
             </Box>
           </ModalBody>
         </ModalContent>

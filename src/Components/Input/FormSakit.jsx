@@ -145,7 +145,7 @@ const FormInputSakit = ({ label }) => {
                   name="absen"
                   isReadOnly
                   type="text"
-                  value={label}
+                  defaultValue={label}
                   w="60vw"
                 />
               </Flex>

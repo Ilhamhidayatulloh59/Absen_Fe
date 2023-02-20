@@ -43,7 +43,7 @@ const SearchNama = () => {
           name="NIS"
           isRequired
           isReadOnly={value}
-          value={value}
+          defaultValue={value}
           onClick={onOpen}
           type="text"
         />
@@ -76,8 +76,8 @@ const SearchNama = () => {
                 }}
                 spacing="4"
               >
-                {data.map((item) => {
-                  return <Radio value={item.NIS}>{item.Nama}</Radio>;
+                {data.map((item, index) => {
+                  return <Radio key={index} value={item.NIS}>{item.Nama}</Radio>;
                 })}
               </Stack>
             </RadioGroup>

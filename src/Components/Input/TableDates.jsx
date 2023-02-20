@@ -56,7 +56,7 @@ const TableDates = ({ dates }) => {
             <Tbody>
               {dates.map((item, index) => {
                 return (
-                  <Tr>
+                  <Tr key={index}>
                     <ValueComponent date={item}/>
                     <Td>{item.date}</Td>
                     <Td isNumeric>{item.time}</Td>

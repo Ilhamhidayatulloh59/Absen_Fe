@@ -27,7 +27,6 @@ import SearchNama from "./SearchNama";
 import axios from "../../api/axios";
 import { useEffect } from "react";
 import AddDates from "./AddDates";
-import TableDates from "./TableDates";
 
 const FormInputPulang = ({ label }) => {
   const [isMobile] = useMediaQuery("(max-width: 481px)");
@@ -36,9 +35,7 @@ const FormInputPulang = ({ label }) => {
   const [data, setData] = useState([]);
   const params = useParams();
   const toast = useToast();
-  var todayDate = new Date().toISOString().toString().slice(0, 10);
   const [dates, setDates] = useState([]);
-  const [tgl, setTgl] = useState(new Date().toISOString().toString().slice(0, 10))
 
   const getData = async () => {
     try {
@@ -49,15 +46,6 @@ const FormInputPulang = ({ label }) => {
     }
   };
 
-  const onAdd = (item) => {
-    dates.push(item);
-    setDates(dates.sort((a, b) => new Date(b.date) - new Date(a.date)));
-  };
-
-  const handleChange = (e) => {
-    setTgl(e.target.value)
-  }
-
   const handleSubmit = async (event) => {
     try {
       event.preventDefault();
@@ -65,7 +53,6 @@ const FormInputPulang = ({ label }) => {
       data.date = formData.get("date");
       data.absen = label;
       data.alasan = formData.get("alasan");
-      data.days = formData.get("days");
       data.dates = dates;
       console.log(data);
 
@@ -90,7 +77,7 @@ const FormInputPulang = ({ label }) => {
 
   useEffect(() => {
     getData();
-  }, [value, dates]);
+  }, [value]);
 
   return (
     <Center>
@@ -143,14 +130,7 @@ const FormInputPulang = ({ label }) => {
               ) : null}
               <Flex mt="4" align="center" justify="space-between">
                 <FormLabel>Tanggal</FormLabel>
-                <Input
-                  name="date"
-                  onChange={handleChange}
-                  isRequired
-                  type="date"
-                  w="60vw"
-                  defaultValue={todayDate}
-                />
+                <Input name="date" isRequired type="date" w="60vw" />
               </Flex>
               <Flex mt="4" align="center" justify="space-between">
                 <FormLabel>Alasan</FormLabel>
@@ -161,36 +141,23 @@ const FormInputPulang = ({ label }) => {
                   </Stack>
                 </RadioGroup>
               </Flex>
-              <Flex mt="4" align="center" justify="space-between">
-                <FormLabel>Jumlah Hari</FormLabel>
-                <Input
-                  isRequired
-                  type="number"
-                  w="60vw"
-                  value={dates.length}
-                  name="days"
-                />
-              </Flex>
               <Flex mt="4" justify="space-between">
                 <FormLabel>Tasreh</FormLabel>
                 <Box>
-                  <TableDates onAdd={onAdd} dates={dates} />
-                  <AddDates onAdd={onAdd} dates={dates} tgl={tgl} />
+                  <AddDates onAdd={setDates} dates={dates} />
                 </Box>
               </Flex>
-              {dates.length ? (
-                <Flex mt="4" justify="end">
-                  <Circle
-                    as={Button}
-                    type="submit"
-                    bgColor="orange"
-                    p="3"
-                    color="white"
-                  >
-                    <Icon w={5} h={5} as={IoArrowForwardOutline} />
-                  </Circle>
-                </Flex>
-              ) : null}
+              <Flex mt="4" justify="end">
+                <Circle
+                  as={Button}
+                  type="submit"
+                  bgColor="orange"
+                  p="3"
+                  color="white"
+                >
+                  <Icon w={5} h={5} as={IoArrowForwardOutline} />
+                </Circle>
+              </Flex>
             </Box>
           </form>
         </Box>
