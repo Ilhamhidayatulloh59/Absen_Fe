@@ -11,29 +11,39 @@ import useAuth from "../hooks/useAuth";
 
 const Profile = () => {
   const [isMobile] = useMediaQuery("(max-width: 481px)");
-  const {auth} = useAuth()
+  const { auth } = useAuth();
 
   return (
     <Center>
       {isMobile ? (
-        <VStack
-          w="100vw"
-          h="36"
-          bgColor="orange"
-          borderBottomRadius="3xl"
-          boxShadow="base"
-          justify='center'
-          align='start'
-        >
-          <Text ml='4' fontSize='sm' fontWeight='bold'>Hi, Admin</Text>
-          <Flex p='4' pt='-4'>
-            <Avatar onClick={() => localStorage.removeItem('token')} />
-            <Box ml='4'>
-              <Text fontWeight='bold'>{auth.username}</Text>
-              <Text fontSize='sm'>{auth.section}</Text>
+        <Box w="100vw" h='36' justify="center" align="start">
+          <Box bgColor="orange" w="100vw" h='10' borderBottomRadius="xl" />
+          <Center mt='-8' >
+            <Box
+              boxShadow="base"
+              w="90vw"
+              h='32'
+              zIndex="2"
+              position="relative"
+              bgColor="white"
+              p='3'
+              borderBottom='4px'
+              borderBottomColor='orange'
+              borderRadius='md'
+            >
+              <Text ml="4" fontSize="sm" fontWeight="bold">
+                Hai, Admin !
+              </Text>
+              <Flex p="3">
+                <Avatar/>
+                <Box ml="4">
+                  <Text fontWeight="bold">{auth.username}</Text>
+                  <Text fontSize="sm">{auth.section}</Text>
+                </Box>
+              </Flex>
             </Box>
-          </Flex>
-        </VStack>
+          </Center>
+        </Box>
       ) : (
         "Not Found"
       )}

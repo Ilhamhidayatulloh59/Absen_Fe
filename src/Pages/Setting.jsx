@@ -5,6 +5,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import Profile from "../Components/Profile";
+import MenuSetting from "../Components/Setting/Menu";
 
 const Setting = () => {
   const [isMobile] = useMediaQuery("(max-width: 481px)");
@@ -17,7 +18,7 @@ const Setting = () => {
           borderBottomRadius="3xl"
         >
           <Profile />
-          <Text>Setting</Text>
+          <MenuSetting/>
         </Box>
       ) : (
         "Not Found"
