@@ -27,6 +27,7 @@ import SearchNama from "./SearchNama";
 import axios from "../../api/axios";
 import { useEffect } from "react";
 import TableDates from "./TableDates";
+import DayDefault from "./Day";
 
 const FormInputPulang = ({ label }) => {
   const [isMobile] = useMediaQuery("(max-width: 481px)");
@@ -66,8 +67,10 @@ const FormInputPulang = ({ label }) => {
         status: "success",
         duration: 2000,
       });
+
       setValue("");
       setDates([]);
+      document.getElementsByName('NIS')[0].value = ''
     } catch (err) {
       console.log(err);
       toast({
@@ -142,6 +145,10 @@ const FormInputPulang = ({ label }) => {
                   onChange={(e) => setDate(e.target.value)}
                   w="60vw"
                 />
+              </Flex>
+              <Flex mt="4" align="center" justify="space-between">
+                <FormLabel>Hari</FormLabel>
+                <DayDefault date={date} />
               </Flex>
               <Flex mt="4" align="center" justify="space-between">
                 <FormLabel>Alasan</FormLabel>

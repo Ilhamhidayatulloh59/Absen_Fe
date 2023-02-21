@@ -34,8 +34,6 @@ const FormAddDate = () => {
   const params = useParams();
   const navigate = useNavigate();
 
-  console.log(dates.length);
-
   const getData = async () => {
     try {
       const res = await axios.get(`student/${value}`);
