@@ -27,16 +27,16 @@ const SearchNIM = () => {
 
   const getData = async () => {
     try {
-      const res = await axios(`student?search=${search.current.value}`);
+      const res = await axios(`student?search=${search.current? search.current.value : ''}`);
       setData(res.data);
     } catch (err) {
-      // console.log(err);
+      console.log(err);
     }
   };
 
   useEffect(() => {
     getData();
-  }, [data]);
+  },[]);
 
   return (
     <>
@@ -71,6 +71,7 @@ const SearchNIM = () => {
               ref={search}
               defaultValue=""
               placeholder="search"
+              onChange={getData}
             />
             <RadioGroup defaultValue="">
               <Stack

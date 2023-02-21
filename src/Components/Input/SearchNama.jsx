@@ -26,7 +26,7 @@ const SearchNama = () => {
 
   const getData = async () => {
     try {
-      const res = await axios(`student?search=${search.current.value}`);
+      const res = await axios(`student?search=${search.current? search.current.value : ''}`);
       setData(res.data);
     } catch (err) {
       // console.log(err);
@@ -35,7 +35,7 @@ const SearchNama = () => {
 
   useEffect(() => {
     getData();
-  }, [data]);
+  }, []);
   return (
     <>
       <InputGroup w="60vw">
@@ -65,6 +65,7 @@ const SearchNama = () => {
               ref={search}
               defaultValue=""
               placeholder="search"
+              onChange={getData}
             />
             <RadioGroup defaultValue="">
               <Stack

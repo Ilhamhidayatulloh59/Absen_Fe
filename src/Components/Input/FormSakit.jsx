@@ -170,7 +170,7 @@ const FormInputSakit = ({ label }) => {
                     <FormLabel>Nama</FormLabel>
                     <Input
                       name="nama"
-                      isReadOnly={data?.name}
+                      isReadOnly={value}
                       isRequired
                       type="text"
                       defaultValue={data?.Nama}
