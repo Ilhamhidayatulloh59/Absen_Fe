@@ -15,6 +15,7 @@ import RequireAuth from './Components/RequireAuth';
 import NavBar from './Components/Nabvar';
 import Form from './Pages/Form';
 import Caraousel from './Components/Caraousel/Caraousel';
+import FormTasreh from './Pages/FormTasreh';
 
 const router = createBrowserRouter([
   {
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
               {
                 path: '/input/:jenis',
                 element: <Form />,
+              },
+              {
+                path: '/input/Pulang/add',
+                element: <FormTasreh />,
               },
             ],
           },

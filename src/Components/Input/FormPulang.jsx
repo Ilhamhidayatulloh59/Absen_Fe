@@ -19,23 +19,23 @@ import {
 } from "@chakra-ui/react";
 import { IoArrowForwardOutline } from "react-icons/io5";
 import { CgArrowsExchange } from "react-icons/cg";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import useValue from "../../hooks/useValue";
 import SearchNIM from "./SearchNim";
 import { useState } from "react";
 import SearchNama from "./SearchNama";
 import axios from "../../api/axios";
 import { useEffect } from "react";
-import AddDates from "./AddDates";
+import TableDates from "./TableDates";
 
 const FormInputPulang = ({ label }) => {
   const [isMobile] = useMediaQuery("(max-width: 481px)");
-  const { value, setValue } = useValue();
+  const { value, setValue, date, setDate, dates, setDates } = useValue();
   const [searchBy, setSearchBy] = useState("NIS");
   const [data, setData] = useState([]);
   const params = useParams();
   const toast = useToast();
-  const [dates, setDates] = useState([]);
+  const navigate = useNavigate()
 
   const getData = async () => {
     try {
@@ -45,6 +45,10 @@ const FormInputPulang = ({ label }) => {
       console.log(err);
     }
   };
+
+  const onAdd = () => {
+    navigate('/Input/Pulang/add')
+  }
 
   const handleSubmit = async (event) => {
     try {
@@ -62,17 +66,17 @@ const FormInputPulang = ({ label }) => {
         status: "success",
         duration: 2000,
       });
+      setValue("");
+      setDates([]);
     } catch (err) {
       console.log(err);
       toast({
         title: "Failed",
-        description: `Try add again`,
+        description: `${err.response.message}`,
         status: "error",
         duration: 2000,
       });
     }
-    setValue("");
-    setDates([]);
   };
 
   useEffect(() => {
@@ -130,7 +134,14 @@ const FormInputPulang = ({ label }) => {
               ) : null}
               <Flex mt="4" align="center" justify="space-between">
                 <FormLabel>Tanggal</FormLabel>
-                <Input name="date" isRequired type="date" w="60vw" />
+                <Input
+                  name="date"
+                  isRequired
+                  type="date"
+                  defaultValue={date}
+                  onChange={(e) => setDate(e.target.value)}
+                  w="60vw"
+                />
               </Flex>
               <Flex mt="4" align="center" justify="space-between">
                 <FormLabel>Alasan</FormLabel>
@@ -144,20 +155,29 @@ const FormInputPulang = ({ label }) => {
               <Flex mt="4" justify="space-between">
                 <FormLabel>Tasreh</FormLabel>
                 <Box>
-                  <AddDates onAdd={setDates} dates={dates} />
+                  <TableDates/>
+                  <Button
+                    variant='ghost'
+                    colorScheme="orange"
+                    onClick={onAdd}
+                  >
+                    New
+                  </Button>
                 </Box>
               </Flex>
-              <Flex mt="4" justify="end">
-                <Circle
-                  as={Button}
-                  type="submit"
-                  bgColor="orange"
-                  p="3"
-                  color="white"
-                >
-                  <Icon w={5} h={5} as={IoArrowForwardOutline} />
-                </Circle>
-              </Flex>
+              {dates.length ? (
+                <Flex mt="4" justify="end">
+                  <Circle
+                    as={Button}
+                    type="submit"
+                    bgColor="orange"
+                    p="3"
+                    color="white"
+                  >
+                    <Icon w={5} h={5} as={IoArrowForwardOutline} />
+                  </Circle>
+                </Flex>
+              ) : null}
             </Box>
           </form>
         </Box>

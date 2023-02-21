@@ -1,8 +1,5 @@
-import { FormLabel } from "@chakra-ui/form-control";
 import { Input } from "@chakra-ui/input";
-import { Flex } from "@chakra-ui/layout";
 import React, { useRef } from "react";
-import { IoArrowForwardOutline } from "react-icons/io5";
 
 const DayDefault = ({ date }) => {
   const day = useRef();
@@ -58,7 +55,7 @@ const DayDefault = ({ date }) => {
 
   return (
     <>
-        <Input type="text" w="60vw" isReadOnly ref={day} />
+        <Input name="day" type="text" w="60vw" isReadOnly ref={day} />
     </>
   );
 };

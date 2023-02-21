@@ -30,14 +30,13 @@ import TimeCust from "./TimeCust";
 
 const FormInputSakit = ({ label }) => {
   const [isMobile] = useMediaQuery("(max-width: 481px)");
-  const { value, setValue } = useValue();
+  const { value, setValue, date, setDate } = useValue();
   const [searchBy, setSearchBy] = useState("NIS");
   const [data, setData] = useState([]);
   const [time, setTime] = useState([]);
   const [cust, setCust] = useState(false);
   const params = useParams();
   const toast = useToast();
-  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const [penyakit, setPenyakit] = useState("");
 
   const getData = async () => {

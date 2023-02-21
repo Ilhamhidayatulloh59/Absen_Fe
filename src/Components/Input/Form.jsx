@@ -31,12 +31,11 @@ import TimeCust from "./TimeCust";
 
 const FormInput = ({ label }) => {
   const [isMobile] = useMediaQuery("(max-width: 481px)");
-  const { value, setValue } = useValue();
+  const { value, setValue, date, setDate } = useValue();
   const [searchBy, setSearchBy] = useState("NIS");
   const [data, setData] = useState([]);
   const [time, setTime] = useState([]);
   const [cust, setCust] = useState(false);
-  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const [isSubmit, setisSubmit] = useState(false);
   const params = useParams();
   const toast = useToast();
