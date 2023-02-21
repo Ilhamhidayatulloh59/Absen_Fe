@@ -57,12 +57,11 @@ const FormAddDate = () => {
       });
       dates.sort((a, b) => new Date(b.date) - new Date(a.date));
       setDates(dates);
+      setCust(false);
       navigate(-1);
     } catch (err) {
       console.log(err);
     }
-    setValue("");
-    setCust(false);
   };
 
   useEffect(() => {

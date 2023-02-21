@@ -69,6 +69,8 @@ const FormInputSakit = ({ label }) => {
         status: "success",
         duration: 2000,
       });
+      setValue("");
+      setPenyakit("");
     } catch (err) {
       console.log(err);
       toast({
@@ -78,8 +80,6 @@ const FormInputSakit = ({ label }) => {
         duration: 2000,
       });
     }
-    setValue("");
-    setPenyakit("");
   };
 
   useEffect(() => {
