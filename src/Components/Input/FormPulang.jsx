@@ -36,7 +36,7 @@ const FormInputPulang = ({ label }) => {
   const [data, setData] = useState([]);
   const params = useParams();
   const toast = useToast();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const getData = async () => {
     try {
@@ -48,8 +48,8 @@ const FormInputPulang = ({ label }) => {
   };
 
   const onAdd = () => {
-    navigate('/Input/Pulang/add')
-  }
+    navigate("/Input/Pulang/add");
+  };
 
   const handleSubmit = async (event) => {
     try {
@@ -70,7 +70,7 @@ const FormInputPulang = ({ label }) => {
 
       setValue("");
       setDates([]);
-      document.getElementsByName('NIS')[0].value = ''
+      document.getElementsByName("NIS")[0].value = "";
     } catch (err) {
       console.log(err);
       toast({
@@ -127,7 +127,8 @@ const FormInputPulang = ({ label }) => {
                     <FormLabel>Nama</FormLabel>
                     <Input
                       name="nama"
-                      isReadOnly
+                      isReadOnly={data?.name}
+                      isRequired
                       type="text"
                       defaultValue={data?.Nama}
                       w="60vw"
@@ -162,12 +163,8 @@ const FormInputPulang = ({ label }) => {
               <Flex mt="4" justify="space-between">
                 <FormLabel>Tasreh</FormLabel>
                 <Box>
-                  <TableDates/>
-                  <Button
-                    variant='ghost'
-                    colorScheme="orange"
-                    onClick={onAdd}
-                  >
+                  <TableDates />
+                  <Button variant="ghost" colorScheme="orange" onClick={onAdd}>
                     New
                   </Button>
                 </Box>

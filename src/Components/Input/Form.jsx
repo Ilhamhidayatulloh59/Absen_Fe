@@ -68,6 +68,8 @@ const FormInput = ({ label }) => {
         status: "success",
         duration: 2000,
       });
+      setValue("");
+      setCust(false)
     } catch (err) {
       console.log(err);
       toast({
@@ -77,8 +79,6 @@ const FormInput = ({ label }) => {
         duration: 2000,
       });
     }
-    setValue("");
-    setCust(false)
   };
 
   useEffect(() => {
@@ -164,7 +164,8 @@ const FormInput = ({ label }) => {
                     <FormLabel>Nama</FormLabel>
                     <Input
                       name="nama"
-                      isReadOnly
+                      isReadOnly={data?.name}
+                      isRequired
                       type="text"
                       defaultValue={data?.Nama}
                       w="60vw"

@@ -70,6 +70,7 @@ const FormInputSakit = ({ label }) => {
         duration: 2000,
       });
       setValue("");
+      setCust(false)
       setPenyakit("");
     } catch (err) {
       console.log(err);
@@ -169,7 +170,8 @@ const FormInputSakit = ({ label }) => {
                     <FormLabel>Nama</FormLabel>
                     <Input
                       name="nama"
-                      isReadOnly
+                      isReadOnly={data?.name}
+                      isRequired
                       type="text"
                       defaultValue={data?.Nama}
                       w="60vw"
